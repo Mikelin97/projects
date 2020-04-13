@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<title>Mike Lin</title>
+		<style type="text/css">
+			table, th, td {border: 1px solid black; border-collapse: collapse; padding: 15px}
+			body {font: sans-serif; margin-left:233px; margin-right:233px }
+			html {line-height: 1; }
+			h5 {font-size: 25px}
+		</style>
+	</head>
+	<body>
+		<h1><center>Project 1: Colorizing the Prokudin-Gorskii photo collection</center></h1>
+		<h5><b>Intro</b></h5>
+		
+		<body> The goal is to recreate colored images by aligning three glass plates negatives, which are grayscale images taken in three channels, Blue, Green, and Red separately. </body>
+		<h5><b>Approach</b></h5>
+		
+		<body>In order to reconstruct the most vivid colored images, I implement the Sum of Squared Difference (SSD) algorithm. The blue image is used as the base, and the other two channels(Green & Red) move within the range of <br>(-15, 15) displacement. After the sum of square differences between corresponding pixels are calculated, I find the least sum of differences of two images. Because the displacement causes some mismatch at edges, which influences the sum, I crop 20% from each side during calculation to keep the result clean. 
+		<br>Furthermore, because the .tif images are substantially larger than .jpg ones, special treatments are required to ensure a decent runtime. The images are downscaled by a factor of 2 in each recursive iteration. At the coarsest level, the native algorithm was executed. After the initial offsets are found, a small range is searched near the offset at the large scale image. Runtime for smaller images is around half a second, while it takes around 40 seconds to finish the estimation for the larger ones.  </body>
+		<h5><b>Imperfection</b></h5>
+		
+		<body>Most of the results resemble the expected colored images pretty well, only the emir.tif image shows a substantial distortion. The problem seem to be one of the channel has a much higher brightness intensity (presumably the red image), so that the algorithm does not present a good result. One possible fix is to have some filtering algorithm to identify the edges of significant figures, so that light intensity will weigh less.</body>
+		<h5><b>Outcome</b></h5>
+		
+		<center><table class="table"></center>
+			<thead></thead>
+			<tbody>
+				<tr>
+					<th scope="row">
+						"monastery.jpg"
+						<br>
+						"G:(2, -3) R:(2, 3)"
+					</th>
+					<td>
+						<img  src="./out_path/monastery.jpg" width="400">
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						"cathedral.jpg"
+						<br>
+						"G:(2, 5) R:(3, 12)"
+					</th>
+					<td>
+						<img src="./out_path/cathedral.jpg" width="400">
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						"tobolsk.jpg"
+						<br>
+						"G:(3, 3) R:(3, 7)"
+					</th>
+					<td>
+						<img border="0" src="./out_path/tobolsk.jpg" width="400">
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						"workshop.tif"
+						<br>
+						"G:(-1, 53) R:(-7, 105)"
+					</th>
+					<td>
+						<img border="0" src="./out_path/workshop.jpg" width="400">
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						"emir.tif"
+						<br>
+						"G:(19, 48) R:(25, 55)"
+					</th>
+					<td>
+						<img border="0" src="./out_path/emir.jpg" width="400">
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						"three_generations.tif"
+						<br>
+						"G:(14, 52) R:(12, 111)"
+					</th>
+					<td>
+						<img border="0" src="./out_path/three_generations.jpg" width="400">
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						"melons.tif"
+						<br>
+						"G:(10, 81) R:(14, 178)"
+					</th>
+					<td>
+						<img border="0" src="./out_path/melons.jpg" width="400">
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						"onion_church.tif"
+						<br>
+						"G:(21, 52) R:(23, 109)"
+					</th>
+					<td>
+						<img border="0" src="./out_path/onion_church.jpg" width="400">
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						"train.tif"
+						<br>
+						"G:(6, 42) R:(22, 86)"
+					</th>
+					<td>
+						<img border="0" src="./out_path/train.jpg" width="400">
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						"icon.tif"
+						<br>
+						"G:(16, 40) R:(18, 89)"
+					</th>
+					<td>
+						<img border="0" src="./out_path/icon.jpg" width="400">
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						"village.tif"
+						<br>
+						"G:(12, 64) R:(18, 137)"
+					</th>
+					<td>
+						<img border="0" src="./out_path/village.jpg" width="400">
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						"self_portrait.tif"
+						<br>
+						"G:(21, 77) R:(23, 174)"
+					</th>
+					<td>
+						<img border="0" src="./out_path/self_portrait.jpg" width="400">
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						"harvesters.tif"
+						<br>
+						"G:(16, 59) R:(14, 123)"
+					</th>
+					<td>
+						<img border="0" src="./out_path/harvesters.jpg" width="400">
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						"lady.tif"
+						<br>
+						"G:(8, 55) R:(12, 113)"
+					</th>
+					<td>
+						<img border="0" src="./out_path/lady.jpg" width="400">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</body>
+
+</html>
